@@ -49,7 +49,7 @@ switch ($data[$firstKey]) { // mi trovo nel caso di get_data
         }
         break;
     case 'get_statistics':
-//        echo "i equals 1";
+               echo "Dobbiamo fa sto cazzo di statistics";
 //        break;
 //    case 2:
 //        echo "i equals 2";

@@ -6,7 +6,6 @@ $user = "root";
 $port = 3306;
 $db = new PDO("mysql:host=$hostname;dbname=$dbname; port=$port", $user, '') or die();
 echo "connessione avvenuta <br/>";
-
 $data = json_decode(file_get_contents('php://input'), true);
 $first_key = key($data);
 $id_postdata;
