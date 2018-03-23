@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <button onclick="send()">Send</button>
+        <div id="result"></div>
+        <br/>
+        <script> 
+            var xmlhttp;
+            
+            function send(){
+                xmlhttp = new XMLHttpRequest();
+                var values =  
+                        {
+                            action : 'get_data',
+                            page : 1,
+                            filter: [
+                                {
+                                    key : 'date_interval',
+                                    operator : '=',
+                                    value : '20180307032639-20180320032639'
+                                }
+                            ]
+                        };
+                var myJsonString = JSON.stringify(values);
+                xmlhttp.onreadystatechange = respond;
+                xmlhttp.open("POST", "operazioni1.php", true);
+                xmlhttp.send(myJsonString);
+            }
+            function respond() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById('result').innerHTML = xmlhttp.responseText;
+                }
+            }
+        </script>
+    </body>
+</html>

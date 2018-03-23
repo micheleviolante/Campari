@@ -1,0 +1,63 @@
+{
+    "camp_id_post_data":"asd123dsa345",
+    "camp_id_questionario":"Self Evaluation",
+    "camp_id_user":"3034",
+    "camp_username":"lucio.monterubbiano",
+    "camp_timestamp_inizio":20180130193000,
+    "camp_timestamp_fine":30344352,
+    "camp_numero_risposte_corrette":4,
+    "camp_numero_risposte_totali":6,
+    "camp_dettagli_traccimaneto": [
+        { "camp_singola_domanda_inizio_timestamp":30342352, 
+		  "camp_singola_domanda_id":1,
+		  "camp_singola_domanda_text":"Which sentence below is more appropriate, with reference to Risk Management?",
+		  "camp_singola_domanda_risposta_data_id":2,
+		  "camp_singola_domanda_risposta_data_text":"Risk management is the role of the Corporate Management Team",
+		  "camp_singola_domanda_risposta_data_corretta_bool":"false",
+		  "camp_singola_domanda_risposta_data_timestamp":30342352,
+		  "camp_singola_domanda_parco_risposte":[{
+				"camp_singola_domanda_risposta_1_id":1,
+				"camp_singola_domanda_risposta_1_text":"Risk management is the essential role of Internal Audit",
+				"camp_singola_domanda_risposta_1_corretta_bool":"false",
+				"camp_singola_domanda_risposta_2_id":2,
+				"camp_singola_domanda_risposta_2_text":"Risk management is the role of the Corporate Management Team",
+				"camp_singola_domanda_risposta_2_corretta_bool":"false",
+				"camp_singola_domanda_risposta_3_id":3,
+				"camp_singola_domanda_risposta_3_text":"Risk management is the role of Corporate Audit, PWC and the External Auditors",
+				"camp_singola_domanda_risposta_3_corretta_bool":"false",
+				"camp_singola_domanda_risposta_4_id":4,
+				"camp_singola_domanda_risposta_4_text":"Risk management is a task for the entire organization, coordinated by Internal Audit and supervised by the Risk Committee together with the Board of Directors",
+				"camp_singola_domanda_risposta_4_corretta_bool":"true"
+                  }]
+		},
+		{ "camp_singola_domanda_inizio_timestamp":30342352, 
+		  "camp_singola_domanda_id":2,
+		  "camp_singola_domanda_text":"The Total Outstanding Long Term Debt at 30 September 2016 was 1.7 billion €. Which of the following ratios help better to evaluate the overall balance of the financial structure?",
+		  "camp_singola_domanda_risposta_data_id":1,
+		  "camp_singola_domanda_risposta_data_text":"Net Debt/Equity",
+		  "camp_singola_domanda_risposta_data_corretta_bool":"true",
+		  "camp_singola_domanda_risposta_data_timestamp":30342352,
+		  "camp_singola_domanda_parco_risposte":[ {
+				"camp_singola_domanda_risposta_1_id":1,
+				"camp_singola_domanda_risposta_1_text":"Net Debt/Equity",
+				"camp_singola_domanda_risposta_1_corretta_bool":"true",
+				"camp_singola_domanda_risposta_2_id":2,
+				"camp_singola_domanda_risposta_2_text":"Net Debt/EBIT",
+				"camp_singola_domanda_risposta_2_corretta_bool":"false",
+				"camp_singola_domanda_risposta_3_id":3,
+				"camp_singola_domanda_risposta_3_text":"EBITDA/Net Debt",
+				"camp_singola_domanda_risposta_3_corretta_bool":"false",
+				"camp_singola_domanda_risposta_4_id":4,
+				"camp_singola_domanda_risposta_4_text":"Interests/EBITDA",
+				"camp_singola_domanda_risposta_4_corretta_bool":"false"
+                  }]
+		}
+                
+                
+		  
+
+    ]
+ }
+ 
+ 
+ 

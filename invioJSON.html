@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>invioJson</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <button onclick="send()">Send</button>
+        <div id="result"></div>
+        <br/>
+        <script>
+            var xmlhttp;
+            function randomIntFromInterval(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            function generateRandomString(iLen) {
+                var sRnd = '';
+                var sChrs = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+                for (var i = 0; i < iLen; i++) {
+                    var randomPoz = Math.floor(Math.random() * sChrs.length);
+                    sRnd += sChrs.substring(randomPoz, randomPoz + 1);
+                }
+                return sRnd;
+            }
+            function generatimestampfine(timestamp) {
+                var timestamp1 = new String(timestamp);
+                var ora= timestamp1.substring(8,10);
+                var minuti = timestamp1.substring(10, 12);
+                var secondi = timestamp1.substring(12, 14);
+                ora=ora*1;
+                minuti = minuti*1;
+                secondi=secondi*1;
+                var durata = randomIntFromInterval(5, 15);
+                minuti=minuti+durata;
+                if(minuti>59){
+                    temporimanente=minuti-60;
+                    ora=ora+1;
+                    minuti=temporimanente;
+                }
+                if(ora<10){
+                    ora="0"+ora;
+                }
+                if(minuti<10){
+                    minuti="0"+minuti;
+                }
+                timestamp1 = timestamp1.substring(0, 8);
+                timestamp1=timestamp1+""+ora+""+minuti+""+""+secondi;
+                return timestamp1;
+            }
+            function generaidquestionario() {
+                var idquestionario = ["Self Evaluation", "Control Test", "Research test", "Check Test"];
+                intero = randomIntFromInterval(0, 3);
+                return idquestionario[intero];
+            }
+
+            function generadomandainizio(timestamp) {
+               var timestamp1 = new String(timestamp);
+               var ora= timestamp1.substring(8,10);
+                var minuti = timestamp1.substring(10, 12);
+                var secondi = timestamp1.substring(12, 14);
+                ora = ora * 1;
+                minuti = minuti * 1;
+                secondi = secondi * 1;
+                timestamp1 = timestamp1.substring(0, 8);
+                timestamp1 = timestamp1 +""+ora+""+""+minuti+""+secondi;
+                return timestamp1;
+            }
+            function generatimestamp() {
+                var timestamp = "201803";
+                var giorno = "0";
+                var giornotemp = randomIntFromInterval(1, 31);
+                if (giornotemp > 0 && giornotemp < 10) {
+                    giorno = giorno + giornotemp;
+                } else {
+                    giorno = giornotemp;
+                }
+                timestamp += giorno;
+                var oragenerata = randomIntFromInterval(0, 23);
+                var ora = "0";
+                if (oragenerata >= 0 && oragenerata < 10) {
+                    ora = ora + oragenerata;
+                } else {
+                    ora = oragenerata;
+                }
+                timestamp += ora;
+                var minutitemp = randomIntFromInterval(0, 59);
+                var minuti = "0";
+                if (minutitemp >= 0 && minutitemp < 9) {
+                    minuti += minutitemp;
+                } else {
+                    minuti = minutitemp;
+                }
+                timestamp += minuti;
+                var secondi = "0";
+                var seconditemp = randomIntFromInterval(0, 59);
+                if (seconditemp >= 0 && seconditemp < 10) {
+                    secondi += seconditemp;
+                } else {
+                    secondi = seconditemp;
+                }
+                timestamp += secondi;
+                return timestamp;
+            }
+            function send() {
+                var i;
+                for (i = 0; i <300; i++) {
+                    xmlhttp = new XMLHttpRequest();
+                    var timestampsondaggioinizio = generatimestamp();
+                    var timestampsondaggiofine = generatimestampfine(timestampsondaggioinizio);
+                    var idquestionario = generaidquestionario();
+                    var domandainizio1 = timestampsondaggioinizio;
+                    var domandafine1=generatimestampfine(domandainizio1);
+                    var domandainizio2=domandafine1;
+                    var domandafine2=generatimestampfine(domandainizio2);
+                    var domandainizio3=domandafine2;
+                    var domandafine3=generatimestampfine(domandainizio3);
+                    var domandainizio4=domandafine3;
+                    var domandafine4=generatimestampfine(domandainizio4);
+                    var domandainizio5=domandafine4;
+                    var domandafine5=generatimestampfine(domandainizio5);
+                    var domandainizio6=domandafine5;
+                    var domandafine6= generatimestampfine(domandainizio6);
+                    var domandainizio7=domandafine6;
+                    var domandafine7=generatimestampfine(domandainizio7);
+                    var domandainizio8=domandafine7;
+                    var domandafine8=generatimestampfine(domandainizio8);
+                    var rispostadomanda1 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda2 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda3 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda4 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda5 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda6 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda7 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];
+                    var rispostadomanda8 = [generateRandomString(10), generateRandomString(10), generateRandomString(10),generateRandomString(10)];             
+                    var decidorispostadomanda1=randomIntFromInterval(0,3);
+                    var decidorispostadomanda2=randomIntFromInterval(0,3);
+                    var decidorispostadomanda3=randomIntFromInterval(0,3);
+                    var decidorispostadomanda4=randomIntFromInterval(0,3);
+                    var decidorispostadomanda5=randomIntFromInterval(0,3);
+                    var decidorispostadomanda6=randomIntFromInterval(0,3);
+                    var decidorispostadomanda7=randomIntFromInterval(0,3);
+                    var decidorispostadomanda8=randomIntFromInterval(0,3);
+                    var rispostadataiddomanda1=decidorispostadomanda1+1;
+                    var rispostadataiddomanda2=decidorispostadomanda2+1;
+                    var rispostadataiddomanda3=decidorispostadomanda2+1;
+                    var rispostadataiddomanda4=decidorispostadomanda2+1;
+                    var rispostadataiddomanda5=decidorispostadomanda2+1;
+                    var rispostadataiddomanda6=decidorispostadomanda2+1;
+                    var rispostadataiddomanda7=decidorispostadomanda2+1;
+                    var rispostadataiddomanda8=decidorispostadomanda2+1;
+                    var boolrispostadatacorretta1;
+                    var boolrispostadatacorretta2;
+                    var boolrispostadatacorretta3;
+                    var boolrispostadatacorretta4;
+                    var boolrispostadatacorretta5;
+                    var boolrispostadatacorretta6;
+                    var boolrispostadatacorretta7;
+                    var boolrispostadatacorretta8;
+                    if(rispostadataiddomanda1==4){
+                        boolrispostadatacorretta1="true";
+                    }
+                    else{
+                        boolrispostadatacorretta1="false";
+                    }
+                    if(rispostadataiddomanda2==4){
+                        boolrispostadatacorretta2="true";
+                    }
+                    else{
+                        boolrispostadatacorretta2="false";
+                    }
+                    if(rispostadataiddomanda3==4){
+                        boolrispostadatacorretta3="true";
+                    }
+                    else{
+                        boolrispostadatacorretta3="false";
+                    }
+                    if(rispostadataiddomanda4==4){
+                        boolrispostadatacorretta4="true";
+                    }
+                    else{
+                        boolrispostadatacorretta4="false";
+                    }
+                    if(rispostadataiddomanda5==4){
+                        boolrispostadatacorretta5="true";
+                    }
+                    else{
+                        boolrispostadatacorretta5="false";
+                    }
+                    if(rispostadataiddomanda6==4){
+                        boolrispostadatacorretta6="true";
+                    }
+                    else{
+                        boolrispostadatacorretta6="false";
+                    }
+                    if(rispostadataiddomanda7==4){
+                        boolrispostadatacorretta7="true";
+                    }
+                    else{
+                        boolrispostadatacorretta7="false";
+                    }
+                    if(rispostadataiddomanda8==4){
+                        boolrispostadatacorretta8="true";
+                    }
+                    else{
+                        boolrispostadatacorretta8="false";
+                    }
+                    var values = {"camp_id_post_data": "asd123dsa345" + i,
+                        "camp_id_questionario": idquestionario,
+                        "camp_id_user": "3034" + i,
+                        "camp_username": "lucio.monterubbiano" + i,
+                        "camp_timestamp_inizio":timestampsondaggioinizio,
+                        "camp_timestamp_fine": timestampsondaggiofine,
+                        "camp_numero_risposte_corrette": randomIntFromInterval(1,8),
+                        "camp_numero_risposte_totali": 8,
+                        "camp_dettagli_traccimaneto": [
+                            {
+                                "camp_singola_domanda_inizio_timestamp": domandainizio1,
+                                "camp_singola_domanda_id": 1,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda1,
+                                "camp_singola_domanda_risposta_data_text":rispostadomanda1[decidorispostadomanda1] ,/*tra questi due parametri mette 2 virgole*/
+                                "camp_singola_domanda_risposta_data_corretta_bool":boolrispostadatacorretta1,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine1,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda1[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda1[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda1[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda1[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                               {"camp_singola_domanda_inizio_timestamp": domandainizio2,
+                                "camp_singola_domanda_id": 2,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda2,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda2[decidorispostadomanda2],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta2,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine2,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda2[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda2[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda2[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda2[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                            {"camp_singola_domanda_inizio_timestamp": domandainizio3,
+                                "camp_singola_domanda_id": 3,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda3,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda3[decidorispostadomanda3],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta3,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine3,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda3[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda3[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda3[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda3[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                            {"camp_singola_domanda_inizio_timestamp": domandainizio4,
+                                "camp_singola_domanda_id": 4,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda4,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda4[decidorispostadomanda4],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta4,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine4,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda4[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda4[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda4[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda4[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                            {"camp_singola_domanda_inizio_timestamp": domandainizio5,
+                                "camp_singola_domanda_id": 5,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda5,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda5[decidorispostadomanda5],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine5,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda5[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda5[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda5[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda5[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                             {"camp_singola_domanda_inizio_timestamp": domandainizio6,
+                                "camp_singola_domanda_id": 6,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda6,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda6[decidorispostadomanda6],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine6,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda6[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda6[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda6[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda6[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                             {"camp_singola_domanda_inizio_timestamp": domandainizio7,
+                                "camp_singola_domanda_id": 7,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda7,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda7[decidorispostadomanda7],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta7,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine7,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda7[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda7[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda7[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda7[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            },
+                            {"camp_singola_domanda_inizio_timestamp": domandainizio8,
+                                "camp_singola_domanda_id": 8,
+                                "camp_singola_domanda_text":generateRandomString(20),
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda8,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda8[decidorispostadomanda8],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta8,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine8,
+                                "camp_singola_domanda_parco_risposte": [{
+                                        "camp_singola_domanda_risposta_1_id": 1,
+                                        "camp_singola_domanda_risposta_1_text": rispostadomanda8[0],
+                                        "camp_singola_domanda_risposta_1_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_2_id": 2,
+                                        "camp_singola_domanda_risposta_2_text": rispostadomanda8[1],
+                                        "camp_singola_domanda_risposta_2_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_3_id": 3,
+                                        "camp_singola_domanda_risposta_3_text": rispostadomanda8[2],
+                                        "camp_singola_domanda_risposta_3_corretta_bool": "false",
+                                        "camp_singola_domanda_risposta_4_id": 4,
+                                        "camp_singola_domanda_risposta_4_text": rispostadomanda8[3],
+                                        "camp_singola_domanda_risposta_4_corretta_bool": "true"
+                                    }]
+                            }
+                        ]};
+                    var myJsonString = JSON.stringify(values);
+                    xmlhttp.onreadystatechange = respond;
+                    xmlhttp.open("POST", "sondaggi.php", true);
+                    xmlhttp.send(myJsonString);
+                }
+            }
+
+            function respond() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById('result').innerHTML = xmlhttp.responseText;
+                }
+            }
+        </script>
+    </body>
+</html>
