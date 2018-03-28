@@ -61,7 +61,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
     echo "$stringaqueryquest <br/>";
     $statementq = $db->prepare($stringaqueryquest);
     if (!$statementq->execute()) {
-        echo "Query questionario fallita! <br/>";
+        echo "Attenzione: intero questionario non inserito! <br/>";
+        print_r($statementq->errorCode().": ".$statementq->errorInfo());
+        exit(1);
     } else {
         echo "Query questionario eseguita!<br/>";
     }
@@ -117,8 +119,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 $stringaquerydom = $stringaquerydom . "'$id_postdata'" . ')';
                 $statementd = $db->prepare($stringaquerydom);
                 if (!$statementd->execute()) {
-                    echo "Query domanda fallita! <br/>";
-                    echo $stringaquerydom;
+                    echo "Attenzione: La domanda avente id: ".$domandaid." del questionario: ".$id_postdata. " insieme alle relative parco risposte, NON è stata inserita <br/>";
+                    print_r($statementd->errorCode().": ".$statementd->errorInfo());
+                    exit(1);
                 } else {
                     echo "Query domanda eseguita! <br/>";
                 }
@@ -144,9 +147,10 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 $stringaqueryrisp = $stringaqueryrisp . "'$domandaid'" . ',' . "'$id_postdata'" . ")";
                 $statementr = $db->prepare($stringaqueryrisp);
                 if (!$statementr->execute()) {
-                    echo "Query risposta fallita! <br/>";
-                    echo $stringaqueryrisp;
-                } else {
+                    echo "Attenzione: le 4 risposte relative alla domanda avente id: ".$domandaid." del questionario avente id: ".$id_postdata." non sono state inserite <br/>";
+                    print_r($statementr->errorCode().": ".$statementr->errorInfo());
+                    exit(1);           
+                } else {   
                     echo "Query risposta eseguita! <br/>";
                 }
                 
