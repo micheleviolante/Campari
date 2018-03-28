@@ -1,12 +1,61 @@
 <?php
+function valida_json($string)
+{   // decode the JSON data
+    $data = json_decode($string, true);
+    // switch and check possible JSON errors
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+            $error = ''; // JSON is valid // No error has occurred
+            break;
+        case JSON_ERROR_DEPTH:
+            $error = 'JSON ERROR: The maximum stack depth has been exceeded.';
+            break;
+        case JSON_ERROR_STATE_MISMATCH:
+            $error = 'JSON ERROR: Invalid or malformed JSON.';
+            break;
+        case JSON_ERROR_CTRL_CHAR:
+            $error = 'JSON ERROR: Control character error, possibly incorrectly encoded.';
+            break;
+        case JSON_ERROR_SYNTAX:
+            $error = 'JSON ERROR: Syntax error, malformed JSON.';
+            break;
+        // PHP >= 5.3.3
+        case JSON_ERROR_UTF8:
+            $error = 'JSON ERROR: Malformed UTF-8 characters, possibly incorrectly encoded.';
+            break;
+        // PHP >= 5.5.0
+        case JSON_ERROR_RECURSION:
+            $error = 'JSON ERROR: One or more recursive references in the value to be encoded.';
+            break;
+        // PHP >= 5.5.0
+        case JSON_ERROR_INF_OR_NAN:
+            $error = 'JSON ERROR: One or more NAN or INF values in the value to be encoded.';
+            break;
+        case JSON_ERROR_UNSUPPORTED_TYPE:
+            $error = 'JSON ERROR: A value of a type that cannot be encoded was given.';
+            break;
+        default:
+            $error = 'JSON ERROR: Unknown JSON error occured.';
+            break;
+    }
 
+    if ($error !== '') {
+        // throw the Exception or exit // or whatever :)
+        exit($error);
+    }
+
+    // everything is OK
+    return $data;
+}
+header('Access-Control-Allow-Origin: *');
 $hostname = "localhost";
 $dbname = "sondaggi";
 $user = "root";
 $port = 3306;
 $db = new PDO("mysql:host=$hostname;dbname=$dbname; port=$port", $user, '') or die();
 echo "connessione avvenuta <br/>";
-$data = json_decode(file_get_contents('php://input'), true);
+$string = file_get_contents('php://input');
+$data= valida_json($string);
 $first_key = key($data);
 $id_postdata;
 reset($data);

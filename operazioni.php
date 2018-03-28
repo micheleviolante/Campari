@@ -1,13 +1,64 @@
 <?php
+function valida_json($string)
+{   // decode the JSON data
+    $data = json_decode($string, true);
+    // switch and check possible JSON errors
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+            $error = ''; // JSON is valid // No error has occurred
+            break;
+        case JSON_ERROR_DEPTH:
+            $error = 'JSON ERROR: The maximum stack depth has been exceeded.';
+            break;
+        case JSON_ERROR_STATE_MISMATCH:
+            $error = 'JSON ERROR: Invalid or malformed JSON.';
+            break;
+        case JSON_ERROR_CTRL_CHAR:
+            $error = 'JSON ERROR: Control character error, possibly incorrectly encoded.';
+            break;
+        case JSON_ERROR_SYNTAX:
+            $error = 'JSON ERROR: Syntax error, malformed JSON.';
+            break;
+        // PHP >= 5.3.3
+        case JSON_ERROR_UTF8:
+            $error = 'JSON ERROR: Malformed UTF-8 characters, possibly incorrectly encoded.';
+            break;
+        // PHP >= 5.5.0
+        case JSON_ERROR_RECURSION:
+            $error = 'JSON ERROR: One or more recursive references in the value to be encoded.';
+            break;
+        // PHP >= 5.5.0
+        case JSON_ERROR_INF_OR_NAN:
+            $error = 'JSON ERROR: One or more NAN or INF values in the value to be encoded.';
+            break;
+        case JSON_ERROR_UNSUPPORTED_TYPE:
+            $error = 'JSON ERROR: A value of a type that cannot be encoded was given.';
+            break;
+        default:
+            $error = 'JSON ERROR: Unknown JSON error occured.';
+            break;
+    }
 
+    if ($error !== '') {
+        // throw the Exception or exit // or whatever :)
+        exit($error);
+    }
+
+    // everything is OK
+    return $data;
+}
 $user = 'root';
 $password = '';
 $dbname = 'sondaggi';
+$result;
 $host = 'localhost';
 $port = 3306;
 $db = new PDO("mysql:host=$host; dbname=$dbname; port=$port", $user, $password) or die("Connessione non riuscita");
-    echo "connessione stabilita<br/><br/>";
-$data = json_decode(file_get_contents('php://input'), true);
+    echo "connessione stabilita<br/>";
+$string = file_get_contents('php://input');
+$data = valida_json($string);
+$numerototalequestionari=0;
+
 $firstKey = key($data); // la prima chiave del json : get_data
 //echo "$firstKey";
 switch ($data[$firstKey]) { // mi trovo nel caso di get_data
@@ -15,7 +66,14 @@ switch ($data[$firstKey]) { // mi trovo nel caso di get_data
         next($data); // vado al secondo campo: page
         $page = $data[key($data)]; 
         next($data); // vado a filter
-        $filter = $data[key($data)][0]; 
+        $filter = $data[key($data)][0];
+        $date= $data[key($data)[2]];
+        $dateinizia=explode("-",$date);
+        $queryinizio = "SELECT COUNT(*) as sondaggitotali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$dateinizia[0]]' AND '$dateinizia[1]]'";
+        $statement = $db->query($queryinizio);
+        $valoretot= $statement->fetchAll(PDO::FETCH_ASSOC);
+        $numerototalequestionari= $valoretot['sondaggitotali'];
+        $result['sondaggitotali']= $numerototalequestionari;
         foreach($filter as $k => $v){
             if($k == 'value'){
                 $tempi = explode("-", $v);
@@ -49,7 +107,7 @@ switch ($data[$firstKey]) { // mi trovo nel caso di get_data
         }
         break;
     case 'get_statistics':
-               echo "Dobbiamo fa sto cazzo di statistics";
+               echo "";
 //        break;
 //    case 2:
 //        echo "i equals 2";
