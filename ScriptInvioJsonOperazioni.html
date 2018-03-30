@@ -27,13 +27,13 @@ and open the template in the editor.
                                 {
                                     key : 'date_interval',
                                     operator : '=',
-                                    value : '20180307032639-20180320032639'
+                                    value : '2018/03/19 12:00:00-2018/03/21 18:00:00'
                                 }
                             ]
                         };
                 var myJsonString = JSON.stringify(values);
                 xmlhttp.onreadystatechange = respond;
-                xmlhttp.open("POST", "operazioni1.php", true);
+                xmlhttp.open("POST", "operazioni.php", true);
                 xmlhttp.send(myJsonString);
             }
             function respond() {

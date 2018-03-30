@@ -210,18 +210,11 @@
                         "camp_id_user": "3034" + i,
                         "camp_username": "lucio.monterubbiano" + i,
                         "camp_timestamp_inizio":timestampsondaggioinizio,
-                        "camp_timestamp_fine": timestampsondaggiofine,
-                        "camp_numero_risposte_corrette": randomIntFromInterval(1,8),
-                        "camp_numero_risposte_totali": 8,
                         "camp_dettagli_traccimaneto": [
                             {
                                 "camp_singola_domanda_inizio_timestamp": domandainizio1,
                                 "camp_singola_domanda_id": 1,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda1,
-                                "camp_singola_domanda_risposta_data_text":rispostadomanda1[decidorispostadomanda1] ,/*tra questi due parametri mette 2 virgole*/
-                                "camp_singola_domanda_risposta_data_corretta_bool":boolrispostadatacorretta1,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine1,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda1[0],
@@ -235,15 +228,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda1[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda1,
+                                "camp_singola_domanda_risposta_data_text":rispostadomanda1[decidorispostadomanda1] ,/*tra questi due parametri mette 2 virgole*/
+                                "camp_singola_domanda_risposta_data_corretta_bool":boolrispostadatacorretta1,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine1
                             },
                                {"camp_singola_domanda_inizio_timestamp": domandainizio2,
                                 "camp_singola_domanda_id": 2,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda2,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda2[decidorispostadomanda2],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta2,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine2,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda2[0],
@@ -257,15 +251,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda2[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda2,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda2[decidorispostadomanda2],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta2,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine2
                             },
                             {"camp_singola_domanda_inizio_timestamp": domandainizio3,
                                 "camp_singola_domanda_id": 3,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda3,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda3[decidorispostadomanda3],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta3,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine3,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda3[0],
@@ -279,15 +274,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda3[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda3,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda3[decidorispostadomanda3],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta3,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine3
                             },
                             {"camp_singola_domanda_inizio_timestamp": domandainizio4,
                                 "camp_singola_domanda_id": 4,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda4,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda4[decidorispostadomanda4],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta4,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine4,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda4[0],
@@ -301,15 +297,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda4[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                 "camp_singola_domanda_risposta_data_id": rispostadataiddomanda4,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda4[decidorispostadomanda4],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta4,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine4
                             },
                             {"camp_singola_domanda_inizio_timestamp": domandainizio5,
                                 "camp_singola_domanda_id": 5,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda5,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda5[decidorispostadomanda5],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine5,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda5[0],
@@ -323,15 +320,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda5[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda5,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda5[decidorispostadomanda5],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine5
                             },
                              {"camp_singola_domanda_inizio_timestamp": domandainizio6,
                                 "camp_singola_domanda_id": 6,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda6,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda6[decidorispostadomanda6],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine6,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda6[0],
@@ -345,15 +343,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda6[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda6,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda6[decidorispostadomanda6],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta5,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine6
                             },
                              {"camp_singola_domanda_inizio_timestamp": domandainizio7,
                                 "camp_singola_domanda_id": 7,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda7,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda7[decidorispostadomanda7],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta7,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine7,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda7[0],
@@ -367,15 +366,16 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda7[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                 "camp_singola_domanda_risposta_data_id": rispostadataiddomanda7,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda7[decidorispostadomanda7],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta7,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine7
                             },
                             {"camp_singola_domanda_inizio_timestamp": domandainizio8,
                                 "camp_singola_domanda_id": 8,
                                 "camp_singola_domanda_text":generateRandomString(20),
-                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda8,
-                                "camp_singola_domanda_risposta_data_text": rispostadomanda8[decidorispostadomanda8],
-                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta8,
-                                "camp_singola_domanda_risposta_data_timestamp": domandafine8,
                                 "camp_singola_domanda_parco_risposte": [{
                                         "camp_singola_domanda_risposta_1_id": 1,
                                         "camp_singola_domanda_risposta_1_text": rispostadomanda8[0],
@@ -389,9 +389,18 @@
                                         "camp_singola_domanda_risposta_4_id": 4,
                                         "camp_singola_domanda_risposta_4_text": rispostadomanda8[3],
                                         "camp_singola_domanda_risposta_4_corretta_bool": "true"
-                                    }]
+                                    }
+                                ],
+                                "camp_singola_domanda_risposta_data_id": rispostadataiddomanda8,
+                                "camp_singola_domanda_risposta_data_text": rispostadomanda8[decidorispostadomanda8],
+                                "camp_singola_domanda_risposta_data_corretta_bool": boolrispostadatacorretta8,
+                                "camp_singola_domanda_risposta_data_timestamp": domandafine8
                             }
-                        ]};
+                        ],
+                        "camp_timestamp_fine": timestampsondaggiofine,
+                        "camp_numero_risposte_corrette": randomIntFromInterval(1,8),
+                        "camp_numero_risposte_totali": 8
+                    };
                     var myJsonString = JSON.stringify(values);
                     xmlhttp.onreadystatechange = respond;
                     xmlhttp.open("POST", "sondaggi.php", true);

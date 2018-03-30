@@ -40,7 +40,7 @@ function valida_json($string)
     }
 
     if ($error !== '') {
-        // throw the Exception or exit // or whatever :)
+        // throw the Exception or exit //
         exit($error);
     }
 

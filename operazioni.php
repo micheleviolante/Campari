@@ -54,11 +54,9 @@ $result;
 $host = 'localhost';
 $port = 3306;
 $db = new PDO("mysql:host=$host; dbname=$dbname; port=$port", $user, $password) or die("Connessione non riuscita");
-    echo "connessione stabilita<br/>";
 $string = file_get_contents('php://input');
 $data = valida_json($string);
 $numerototalequestionari=0;
-
 $firstKey = key($data); // la prima chiave del json : get_data
 //echo "$firstKey";
 switch ($data[$firstKey]) { // mi trovo nel caso di get_data
@@ -67,41 +65,41 @@ switch ($data[$firstKey]) { // mi trovo nel caso di get_data
         $page = $data[key($data)]; 
         next($data); // vado a filter
         $filter = $data[key($data)][0];
-        $date= $data[key($data)[2]];
+        $date= $filter["value"];
         $dateinizia=explode("-",$date);
-        $queryinizio = "SELECT COUNT(*) as sondaggitotali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$dateinizia[0]]' AND '$dateinizia[1]]'";
+        $queryinizio = "SELECT COUNT(*) as sondaggitotali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$dateinizia[0]' AND '$dateinizia[1]' ";
         $statement = $db->query($queryinizio);
-        $valoretot= $statement->fetchAll(PDO::FETCH_ASSOC);
-        $numerototalequestionari= $valoretot['sondaggitotali'];
-        $result['sondaggitotali']= $numerototalequestionari;
+        $valoretot=$statement->fetchAll(PDO::FETCH_ASSOC);
+        $numerototalequestionari = $valoretot[0]['sondaggitotali'];
         foreach($filter as $k => $v){
             if($k == 'value'){
                 $tempi = explode("-", $v);
                 if($page == ""){
-                    $querysenzaPage = "SELECT camp_id_questionario,camp_id_user,camp_timestamp_inizio,camp_timestamp_fine,camp_numero_risposte_corrette,camp_numero_risposte_totali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$tempi[0]]' AND '$tempi[1]]' "; //valori '2018-03-07 03:26:39' and '2018-03-20 03:26:39'
+                    $querysenzaPage = "SELECT camp_id_questionario,camp_id_user,camp_timestamp_inizio,camp_timestamp_fine,camp_numero_risposte_corrette,camp_numero_risposte_totali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$tempi[0]' AND '$tempi[1]' "; //valori '2018-03-07 03:26:39' and '2018-03-20 03:26:39'
                     $statement = $db->query($querysenzaPage);
-                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                   $percentuale= ($result['camp_numero_risposte_corrette']/$result['camp_numero_risposte_totali'])*100;
+                    $result=$statement->fetchAll(PDO::FETCH_ASSOC);
                    for($i=0;$i<count($result);$i++){
                        $percentuale= ($result[$i]['camp_numero_risposte_corrette']/$result[$i]['camp_numero_risposte_totali'])*100;
                        $result[$i]['risposte_corrette_percentuale']=$percentuale;
                        unset($result[$i]['camp_numero_risposte_totali']);
                    }
+                    $result['sondaggitotali']= $numerototalequestionari;
                     $json_string = json_encode($result, JSON_PRETTY_PRINT);
-                    echo $json_string;
+                    print_r($json_string);
                 }
                 else{
                     $offset = ($page-1)*50;
                     $queryconPage = "SELECT camp_id_questionario,camp_id_user,camp_timestamp_inizio,camp_timestamp_fine,camp_numero_risposte_corrette,camp_numero_risposte_totali FROM questionario WHERE camp_timestamp_inizio BETWEEN '$tempi[0]]' AND '$tempi[1]' LIMIT 50 OFFSET $offset"; //valori '2018-03-07 03:26:39' and '2018-03-20 03:26:39'
                     $statement = $db->query($queryconPage);
-                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    $result=$statement->fetchAll(PDO::FETCH_ASSOC);
                     for($i=0;$i<count($result);$i++){
                        $percentuale= ($result[$i]['camp_numero_risposte_corrette']/$result[$i]['camp_numero_risposte_totali'])*100;
                        $result[$i]['risposte_corrette_percentuale']=$percentuale;
                        unset($result[$i]['camp_numero_risposte_totali']);
                     }
-                    $json_string = json_encode($result, JSON_PRETTY_PRINT);
-                    echo $json_string;
+                    $result['sondaggitotali']= $numerototalequestionari;
+                    $json_string = json_encode($result,JSON_PRETTY_PRINT);
+                    print_r($json_string);
                 }
             }
         }
