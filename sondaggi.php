@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 function valida_json($string)
 {   // decode the JSON data
     $data = json_decode($string, true);
@@ -47,7 +48,6 @@ function valida_json($string)
     // everything is OK
     return $data;
 }
-header('Access-Control-Allow-Origin: *');
 $hostname = "localhost";
 $dbname = "sondaggi";
 $user = "root";
@@ -69,8 +69,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
         }
             $stringaqueryquest = $stringaqueryquest . key($data) . ',';
             if (key($data) == "camp_timestamp_inizio"){
-             $timestamp=round($data[key($data)]/1000);
-            $date=date("Y-m-d H:i:s",$timestamp);
+             $timestamp=$data[key($data)];
+            $dt = DateTime::createFromFormat("U.u", $timestamp/1000);
+            $date=$dt->format('Y-m-d H:i:s.u');
             $valorequest[$contquest] = $date;
             }else{
             $valorequest[$contquest] = $data[key($data)];
@@ -80,8 +81,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
         
     }
     next($data);
-    $timestamp=round($data[key($data)]/1000);
-    $date=date("Y-m-d H:i:s",$timestamp);
+    $timestamp=$data[key($data)];
+    $dt = DateTime::createFromFormat("U.u", $timestamp/1000);
+    $date=$dt->format('Y-m-d H:i:s.u');
     $valorequest[$contquest] = $date;
     $contquest++;
     $stringaqueryquest=$stringaqueryquest.key($data).',';
@@ -111,8 +113,10 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
     $statementq = $db->prepare($stringaqueryquest);
     if (!$statementq->execute()) {
         echo "Attenzione: intero questionario non inserito! <br/>";
-        print_r($statementq->errorCode().": ".$statementq->errorInfo());
-        exit(1);
+        $errore=$statementq->errorInfo();
+        $errorcode=$statementq->errorCode();
+        echo"$errorcode".": ".$errore[2];
+        exit();
     } else {
         echo "Query questionario eseguita!<br/>";
     }
@@ -148,8 +152,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 $contvaluesdom++;
                 next($arraydomande[$contdom]);
                 $stringaquerydom = $stringaquerydom .key($arraydomande[$contdom]). ',';
-                 $timestamp=round(($arraydomande[$contdom][key($arraydomande[$contdom])])/1000);
-                 $date=date("Y-m-d H:i:s",$timestamp);
+                $timestamp=$arraydomande[$contdom][key($arraydomande[$contdom])];
+                $dt = DateTime::createFromFormat("U.u", $timestamp/1000);
+                $date=$dt->format('Y-m-d H:i:s.u');
                  $valoredom[$contvaluesdom] = $date;
                  $contvaluesdom++;
                 for($z=0;$z<8;$z++)
@@ -169,7 +174,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 $statementd = $db->prepare($stringaquerydom);
                 if (!$statementd->execute()) {
                     echo "Attenzione: La domanda avente id: ".$domandaid." del questionario: ".$id_postdata. " insieme alle relative parco risposte, NON è stata inserita <br/>";
-                    print_r($statementd->errorCode().": ".$statementd->errorInfo());
+                    $errore=$statementq->errorInfo();
+                    $errorcode=$statementq->errorCode();
+                    echo"$errorcode".": ".$errore[2];
                     exit(1);
                 } else {
                     echo "Query domanda eseguita! <br/>";
@@ -197,7 +204,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 $statementr = $db->prepare($stringaqueryrisp);
                 if (!$statementr->execute()) {
                     echo "Attenzione: le 4 risposte relative alla domanda avente id: ".$domandaid." del questionario avente id: ".$id_postdata." non sono state inserite <br/>";
-                    print_r($statementr->errorCode().": ".$statementr->errorInfo());
+                    $errore=$statementr->errorInfo();
+                    $errorcode=$statementr->errorCode();
+                    echo"$errorcode".": ".$errore[2];
                     exit(1);           
                 } else {   
                     echo "Query risposta eseguita! <br/>";
@@ -215,8 +224,9 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                 }
                 else if($key=="camp_singola_domanda_inizio_timestamp"){
                     $stringaquerydom = $stringaquerydom . $key . ',';
-                    $timestamp=round(($arraydomande[$contdom][$key])/1000);
-                    $date=date("Y-m-d H:i:s",$timestamp);
+                    $timestamp=$arraydomande[$contdom][$key];
+                    $dt = DateTime::createFromFormat("U.u", $timestamp/1000);
+                    $date=$dt->format('Y-m-d H:i:s.u');
                     $valoredom[$contvaluesdom] = $date;
                     $contvaluesdom++;
                 }
@@ -225,7 +235,6 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                     $stringaquerydom = $stringaquerydom . $key . ',';
                     $valoredom[$contvaluesdom] = $arraydomande[$contdom][$key];
                     $contvaluesdom++;
-                    
                 }
             } //FINE ELSE 
         }
