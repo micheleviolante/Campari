@@ -47,6 +47,17 @@ function valida_json($string)
     // everything is OK
     return $data;
 }
+function differenza_date($data2, $data1){
+    $date1= date_create($data1);
+    $date2= date_create($data2);
+  $diff = strtotime($date2->format('Y-m-d H:i:s.u'))-strtotime($date1->format('Y-m-d H:i:s.u'));
+  $micro1 = $date1->format("u");
+  $micro2 = $date2->format("u");
+  $diffmicro = $micro2 - $micro1;
+  list($sec,$micro) = array_pad(explode('.',((($diff) * 1000000) + $diffmicro )/1000000),2,'000');
+  $difference = $sec . "." . str_pad($micro,3,'0');
+  return $difference;
+}
 $user = 'root';
 $password = '';
 $dbname = 'sondaggi';
@@ -194,7 +205,118 @@ case 'get_statistics':
    $stringarisposta=$stringarisposta.']\n}';
    echo $stringarisposta;
         break;	
-        
+case 'get_midtime':
+    /*
+           $risposte = 
+    array(array('risposta_1_text' => '',
+        'numero_di_utenti_che_hanno_risposto_a_questa_risposta' => '',
+        'risposta_corretta' => ''),
+    array('risposta_2_text' => '',
+        'numero_di_utenti_che_hanno_risposto_a_questa_risposta' => '',
+        'risposta_corretta' => ''),
+    array('risposta_3_text' => '',
+        'numero_di_utenti_che_hanno_risposto_a_questa_risposta' => '',
+        'risposta_corretta' => ''),
+    array('risposta_4_text' => '',
+        'numero_di_utenti_che_hanno_risposto_a_questa_risposta' => '',
+        'risposta_corretta' => ''),
+);
+$domande = [
+    'id_questionario' => '',
+    'domanda_text' => '',
+    'domanda_risposta_corretta_testo' => '',
+    'tempo_medio_di_risposta_alla_domanda' => '',
+    'numero_utenti_che_hanno_risposto_correttamente' => '',
+    'numero_totale_di_utenti_che_hanno_effettuato_questa_domanda' => '',
+    'risposte' => $risposte
+];
+$questionari = [
+    'domande' => array($domande)
+];*/
+               $query1= "SELECT camp_id_post_data as primarykeyquestionario, camp_singola_domanda_id,COUNT(*)as numerodomanderipetute,COUNT(camp_singola_domanda_text) as totale, camp_id_questionario,camp_singola_domanda_text FROM questionario,domanda WHERE camp_id_post_data=fk_questionarioid GROUP BY camp_singola_domanda_text";
+               $statement = $db->query($query1);
+               $resultPrincipQuery=$statement->fetchAll(PDO::FETCH_ASSOC);
+               for($i=0; $i<count($resultPrincipQuery); $i++){
+                        $domande[$i]['id_questionario']= $resultPrincipQuery[$i]['camp_id_questionario'];
+                        $domande[$i]['camp_singola_domanda_text']=$resultPrincipQuery[$i]['camp_singola_domanda_text'];
+                        $numtotalediutenti= $resultPrincipQuery[$i]['numerodomanderipetute'];
+                        $queryrispostacorretta="SELECT * FROM parco_risposte WHERE fk_domandaid="."'".$resultPrincipQuery[$i]['camp_singola_domanda_id']."'"." AND fk_domandaquestionario="."'".$resultPrincipQuery[$i]['primarykeyquestionario']."'";
+                        //echo $queryrispostacorretta."\n";
+                        $statement=$db->query($queryrispostacorretta);
+                        $result_parco_risposta=$statement->fetchAll(PDO::FETCH_ASSOC);
+                        if($result_parco_risposta[0]['camp_singola_domanda_risposta_1_corretta_bool']){
+                            $domande[$i]['domanda_risposta_corretta_testo']=$result_parco_risposta[0]['camp_singola_domanda_risposta_1_text'];
+                        }
+                        else if($result_parco_risposta[0]['camp_singola_domanda_risposta_2_corretta_bool']){
+                            
+                            $domande[$i]['domanda_risposta_corretta_testo']=$result_parco_risposta[0]['camp_singola_domanda_risposta_2_text'];
+                        }
+                        else if($result_parco_risposta[0]['camp_singola_domanda_risposta_3_corretta_bool']){
+                            $domande[$i]['domanda_risposta_corretta_testo']=$result_parco_risposta[0]['camp_singola_domanda_risposta_3_text'];
+                        }
+                        else if($result_parco_risposta[0]['camp_singola_domanda_risposta_4_corretta_bool']){
+                            $domande[$i]['domanda_risposta_corretta_testo']=$result_parco_risposta[0]['camp_singola_domanda_risposta_4_text'];
+                        }
+                        else{
+                            $domande[$i]['domanda_risposta_corretta_testo']="Error retrieving correct answer!";
+                        }
+                        $querytempi="SELECT camp_singola_domanda_inizio_timestamp, camp_singola_domanda_risposta_data_timestamp FROM domanda WHERE camp_singola_domanda_text="."'".$resultPrincipQuery[$i]['camp_singola_domanda_text']."'";
+                        //echo $querytempi."\n";
+                        $statementtimestamp=$db->query($querytempi);
+                        $arraytimestamp= $statementtimestamp->fetchAll(PDO::FETCH_ASSOC);
+                        $tempitotali=count($arraytimestamp);
+                        $seconditotali=0;
+                        for($j=0;$j<$tempitotali;$j++){
+                            $datainiziod= $arraytimestamp[$j]['camp_singola_domanda_inizio_timestamp'];
+                            $datafined= $arraytimestamp[$j]['camp_singola_domanda_risposta_data_timestamp'];
+                            $intervallo= differenza_date($datafined, $datainiziod);
+                            $seconditotali+=($intervallo*1);
+                                    }
+                                    $tempomediodomanda=$seconditotali/$tempitotali;
+                                    $domande[$i]['tempo_medio_di_risposta_alla_domanda']="".$tempomediodomanda." s";
+                                    $querycorrect= "SELECT COUNT(*) as utenti_correct FROM domanda WHERE camp_singola_domanda_text LIKE "."'".$resultPrincipQuery[$i]['camp_singola_domanda_text']."'"." AND camp_singola_domanda_risposta_data_corretta_bool=true";
+                                   // echo $querycorrect."\n";
+                                    $statementutenticorrect=$db->query($querycorrect);
+                                    $resultcorrect= $statementutenticorrect->fetchAll(PDO::FETCH_ASSOC);
+                                    $domande[$i]['numero_utenti_che_hanno_risposto_correttamente']=$resultcorrect[0]['utenti_correct'];
+                                    $domande[$i]['numero_totale_di_utenti_che_hanno_effettuato_questa_domanda'] = $tempitotali;
+                                    $querynumrisposta1= "SELECT COUNT(*) as numutentirisposta1 FROM domanda WHERE camp_singola_domanda_risposta_data_text LIKE "."'".$result_parco_risposta[0]['camp_singola_domanda_risposta_1_text']."'";
+                                    //echo $querynumrisposta1."\n";
+                                    $statementnumutentirisposta1=$db->query($querynumrisposta1);
+                                    $numutentirisposta1= $statementnumutentirisposta1->fetchAll(PDO::FETCH_ASSOC);
+                                    $risposte[0]['risposta_1_text']= $result_parco_risposta[0]['camp_singola_domanda_risposta_1_text'];
+                                    $risposte[0]['numero_di_utenti_che_hanno_risposto_a_questa_risposta']= $numutentirisposta1[0]['numutentirisposta1'];
+                                    $risposte[0]['risposta_corretta']= $result_parco_risposta[0]['camp_singola_domanda_risposta_1_corretta_bool'];
+                                    
+                                    $querynumrisposta2= "SELECT COUNT(*) as numutentirisposta2 FROM domanda WHERE camp_singola_domanda_risposta_data_text LIKE"."'".$result_parco_risposta[0]['camp_singola_domanda_risposta_2_text']."'";
+                                    $statementnumutentirisposta2=$db->query($querynumrisposta2);
+                                    $numutentirisposta2= $statementnumutentirisposta2->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    $risposte[1]['risposta_2_text']= $result_parco_risposta[0]['camp_singola_domanda_risposta_2_text'];
+                                    $risposte[1]['numero_di_utenti_che_hanno_risposto_a_questa_risposta']= $numutentirisposta2[0]['numutentirisposta2'];
+                                    $risposte[1]['risposta_corretta']= $result_parco_risposta[0]['camp_singola_domanda_risposta_2_corretta_bool'];
+                                    
+                                    $querynumrisposta3= "SELECT COUNT(*) as numutentirisposta3 FROM domanda WHERE camp_singola_domanda_risposta_data_text="."'".$result_parco_risposta[0]['camp_singola_domanda_risposta_3_text']."'";
+                                    $statementnumutentirisposta3=$db->query($querynumrisposta3);
+                                    $numutentirisposta3= $statementnumutentirisposta3->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    $risposte[2]['risposta_3_text']= $result_parco_risposta[0]['camp_singola_domanda_risposta_3_text'];
+                                    $risposte[2]['numero_di_utenti_che_hanno_risposto_a_questa_risposta']= $numutentirisposta3[0]['numutentirisposta3'];
+                                    $risposte[2]['risposta_corretta']= $result_parco_risposta[0]['camp_singola_domanda_risposta_3_corretta_bool'];
+                                    
+                                    $querynumrisposta4= "SELECT COUNT(*) as numutentirisposta4 FROM domanda WHERE camp_singola_domanda_risposta_data_text="."'".$result_parco_risposta[0]['camp_singola_domanda_risposta_4_text']."'";
+                                    $statementnumutentirisposta4=$db->query($querynumrisposta4);
+                                    $numutentirisposta4= $statementnumutentirisposta4->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    $risposte[3]['risposta_4_text']= $result_parco_risposta[0]['camp_singola_domanda_risposta_4_text'];
+                                    $risposte[3]['numero_di_utenti_che_hanno_risposto_a_questa_risposta']= $numutentirisposta4[0]['numutentirisposta4'];
+                                    $risposte[3]['risposta_corretta']= $result_parco_risposta[0]['camp_singola_domanda_risposta_4_corretta_bool'];
+                                    
+                                    $domande[$i]['risposte']=$risposte;
+                                    $questionari['domande']=$domande;
+                        }//fine for domande;
+                       echo json_encode($questionari);
+                       break;  
     case 'get_filecsv':
       $output = fopen("sondaggi.csv", "w"); 
       fputcsv($output, array('camp_id_post_data', 'camp_id_questionario', 'camp_id_user', 'camp_username', 'camp_timestamp_inizio', 'camp_timestamp_fine','camp_numero_risposte_corrette','camp_numero_risposte_totali'),";");  

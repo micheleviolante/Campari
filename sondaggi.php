@@ -69,7 +69,7 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
         }
             $stringaqueryquest = $stringaqueryquest . key($data) . ',';
             if (key($data) == "camp_timestamp_inizio"){
-             $timestamp=$data[key($data)];
+            $timestamp=$data[key($data)];
             $dt = DateTime::createFromFormat("U.u", $timestamp/1000);
             $date=$dt->format('Y-m-d H:i:s.u');
             $valorequest[$contquest] = $date;
@@ -115,7 +115,7 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
         echo "Attenzione: intero questionario non inserito! <br/>";
         $errore=$statementq->errorInfo();
         $errorcode=$statementq->errorCode();
-        echo"$errorcode".": ".$errore[2];
+        echo"ERROR MYSQL $errorcode".": ".$errore[2];
         exit();
     } else {
         echo "Query questionario eseguita!<br/>";
@@ -176,7 +176,7 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                     echo "Attenzione: La domanda avente id: ".$domandaid." del questionario: ".$id_postdata. " insieme alle relative parco risposte, NON è stata inserita <br/>";
                     $errore=$statementq->errorInfo();
                     $errorcode=$statementq->errorCode();
-                    echo"$errorcode".": ".$errore[2];
+                    echo"ERROR MYSQL $errorcode".": ".$errore[2];
                     exit(1);
                 } else {
                     echo "Query domanda eseguita! <br/>";
@@ -206,7 +206,7 @@ if ($first_key == 'camp_id_post_data') {        //controllo che è il JSON di in
                     echo "Attenzione: le 4 risposte relative alla domanda avente id: ".$domandaid." del questionario avente id: ".$id_postdata." non sono state inserite <br/>";
                     $errore=$statementr->errorInfo();
                     $errorcode=$statementr->errorCode();
-                    echo"$errorcode".": ".$errore[2];
+                    echo"ERROR MYSQL $errorcode".": ".$errore[2];
                     exit(1);           
                 } else {   
                     echo "Query risposta eseguita! <br/>";
